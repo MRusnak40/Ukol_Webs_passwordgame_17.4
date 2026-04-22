@@ -1,30 +1,31 @@
 import {useState} from "react";
+import "./PasswordInput.css";
 
 interface PasswordInputProps{
     setPassword:(password:string)=>void;
 }
 
-function PasswordInput({setPassword}:PasswordInputProps){
+function PasswordInput({ setPassword }: PasswordInputProps) {
+    const [showPassword, setShowPassword] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false)
-    return <>
-        <input
-            // Dynamická změna typu inputu podle stavu showPassword
-            type={showPassword ? 'text' : 'password'}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ padding: '8px', flex: 1 }}
-            placeholder="Tvoje tajné heslo"
-        />
-        <button
-            onClick={() => setShowPassword(!showPassword)}
-            style={{ padding: '8px', cursor: 'pointer' }}
-        >
-            {showPassword ? 'Skrýt' : 'Zobrazit'}
-        </button>
-
-
-    </>
+    return (
+        <div className="password-input-container">
+            <input
+                type={showPassword ? 'text' : 'password'}
+                onChange={(e) => setPassword(e.target.value)}
+                className="password-input"
+                placeholder="Password"
+            />
+            <button
+                onClick={() => setShowPassword(!showPassword)}
+                className="password-toggle-btn"
+            >
+                {showPassword ? 'Hide' : 'Show'}
+            </button>
+        </div>
+    );
 }
 
-
 export default PasswordInput;
+
+
