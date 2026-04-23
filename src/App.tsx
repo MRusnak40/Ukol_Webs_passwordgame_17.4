@@ -27,10 +27,13 @@ function App() {
 
 
 
+
+
             <PasswordStrength password={password} />
 
             {timeSpent > 0 && (
                 <PasswordTimeValidator password={password} time={timeSpent}>
+
                     {(validation) => (
                         <div style={{ marginTop: '1rem' }}>
                             <p style={{ color: validation.isTooFast ? 'red' : validation.isTooSlow ? 'orange' : 'green' }}>
