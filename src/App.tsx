@@ -15,6 +15,7 @@ function App() {
             <h3 className="app-title">Find how strong is your password</h3>
 
             <PasswordInputComponent
+                password={password}
                 setPassword={setPassword}
                 onTimeSpentChange={setTimeSpent}
             />
