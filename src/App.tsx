@@ -1,10 +1,14 @@
 import './App.css'
 import PasswordInputComponent from "./Components/PasswordInputComponent.tsx";
-import { useState } from "react";
 import PasswordStrength from "./Components/PasswordStrength.tsx";
+
+import PasswordTimeValidator from "./Components/PasswordTimeValidator.tsx";
+import { useState } from "react";
 
 function App() {
     const [password, setPassword] = useState("");
+
+    const [timeSpent, setTimeSpent] = useState(0);
 
     return (
         <>
@@ -12,11 +16,18 @@ function App() {
                 <h2 className="app-title">Welcome to the App!</h2>
                 <h3 className="app-title">Find how strong is your password</h3>
 
+                <PasswordInputComponent
+                    setPassword={setPassword}
 
-                <PasswordInputComponent setPassword={setPassword} />
-                <PasswordStrength password={password}/>
+                    onTimeSpentChange={setTimeSpent}
+                />
+
+                <PasswordStrength password={password} />
 
 
+                {timeSpent > 0 && (
+                    <PasswordTimeValidator password={password} time={timeSpent} />
+                )}
             </div>
         </>
     )
