@@ -3,7 +3,6 @@ import "./PasswordInput.css";
 
 interface PasswordInputProps {
     setPassword: (password: string) => void;
-
     onTimeSpentChange: (time: number) => void;
 }
 
@@ -16,41 +15,43 @@ function PasswordInput({ setPassword, onTimeSpentChange }: PasswordInputProps) {
         startTimeRef.current = Date.now();
     };
 
-    const handleBlur = () => {
+
+    const handleConfirm = () => {
         if (startTimeRef.current) {
             const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
             setTimeSpent(elapsed);
-            // 🟢 NOVĚ: odeslat čas rodiči
             onTimeSpentChange(elapsed);
         }
     };
 
-    return ( <>
-        <div className="password-input-container">
+    return (
+        <>
+            <div className="password-input-container">
+                <input
+                    type={showPassword ? 'text' : 'password'}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="password-input"
+                    onFocus={handleFocus}
+                    placeholder="Password"
+                />
+                <button
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="password-toggle-btn"
+                >
+                    {showPassword ? 'Hide' : 'Show'}
+                </button>
 
-                    <input
-                        type={showPassword ? 'text' : 'password'}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="password-input"
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        placeholder="Password"
-                    />
-                    <button
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="password-toggle-btn"
-                    >
-                        {showPassword ? 'Hide' : 'Show'}
-                    </button>
-
-        </div>
-        <div className="password-input-time">
-            {timeSpent > 0 && (
-                <span className="time-spent">
-                            TYPED IN: {timeSpent}s
-                        </span>
-            )}
-        </div>
+                <button onClick={handleConfirm} className="password-toggle-btn" style={{ background: '#3498db' }}>
+                    Done
+                </button>
+            </div>
+            <div className="password-input-time">
+                {timeSpent > 0 && (
+                    <span className="time-spent">
+                        TYPED IN: {timeSpent}s
+                    </span>
+                )}
+            </div>
         </>
     );
 }

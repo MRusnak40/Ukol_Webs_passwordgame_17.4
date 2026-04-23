@@ -1,38 +1,30 @@
+import React from "react";
 
 interface TimeValidatorProps {
     password: string;
     time: number;
+    children: (validation: {
+        isValid: boolean;
+        isTooFast: boolean;
+        isTooSlow: boolean;
+        message: string;
+    }) => React.ReactNode;
 }
 
-function PasswordTimeValidator({ password, time }: TimeValidatorProps) {
+function PasswordTimeValidator({  time, children }: TimeValidatorProps) {
+    const MIN_TIME = 5;
+    const MAX_TIME = 20;
 
-    const MIN_TIME = 1;
-    const MAX_TIME = 5;
-
-    const isValid = time >= MIN_TIME && time <= MAX_TIME;
     const isTooFast = time < MIN_TIME;
     const isTooSlow = time > MAX_TIME;
+    const isValid = time >= MIN_TIME && time <= MAX_TIME;
 
-    return (
-        <div className="time-validator" style={{ marginTop: '1rem' }}>
-            {isTooFast && (
-                <p style={{ color: 'red' }}>
-                    ⚠️ Too fast ( {time} s) – DANGER!
-                </p>
-            )}
-            {isTooSlow && (
-                <p style={{ color: 'orange' }}>
-                    ⏱️ Wery slow {time} s – YOU OK?
-                </p>
-            )}
-            {isValid && (
-                <p style={{ color: 'green' }}>
-                    ✅  OK  time (typed in {time} s)
-                </p>
-            )}
+    let message = '';
+    if (isTooFast) message = `⚠️ Too fast (${time} s) – DANGER!`;
+    else if (isTooSlow) message = `⏱️ Very slow (${time} s) – YOU OK?`;
+    else if (isValid) message = `✅ OK time (typed in ${time} s)`;
 
-        </div>
-    );
+    return <>{children({ isValid, isTooFast, isTooSlow, message })}</>;
 }
 
 export default PasswordTimeValidator;
