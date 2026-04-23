@@ -1,9 +1,9 @@
 interface SequenceValidatorProps {
     password: string;
-    // render-props: předává validační objekt
+    // validacni objekty
     children: (result: {
         isValid: boolean;
-        count: number; // počet nalezených validních sekvencí
+        count: number; // valid sekvence
     }) => React.ReactNode;
 }
 
@@ -25,10 +25,10 @@ function CharacterSequenceValidator({ password, children }: SequenceValidatorPro
         else if (isDigit(char)) currentTypes.add('digit');
         else if (isSpecial(char)) currentTypes.add('special');
 
-        // Pokud jsou přítomny všechny 4 typy, máme validní sekvenci
+        // validni sekvence pokud jsou vsechny 4 veci aktivni
         if (currentTypes.size === requiredTypes.length) {
             count++;
-            currentTypes.clear(); // reset pro hledání další sekvence
+            currentTypes.clear(); // reset pro hledani dalsi
         }
     }
 

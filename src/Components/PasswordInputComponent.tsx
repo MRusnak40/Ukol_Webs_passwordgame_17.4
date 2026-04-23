@@ -13,7 +13,7 @@ function PasswordInput({ password, setPassword, onTimeSpentChange }: PasswordInp
     const startTimeRef = useRef<number | null>(null);
 
     const handleFocus = () => {
-        // Reset časomíry i zobrazeného času – začínáme znovu
+        // reset cas  i input zacne se znovu
         setTimeSpent(0);
         onTimeSpentChange(0);
         startTimeRef.current = Date.now();
@@ -22,12 +22,12 @@ function PasswordInput({ password, setPassword, onTimeSpentChange }: PasswordInp
     const handleConfirm = () => {
         if (startTimeRef.current) {
             const elapsed = Math.floor((Date.now() - startTimeRef.current) / 1000);
-            // Uložíme spočítaný čas a pošleme rodiči – validátory zůstanou viditelné
+            // ulozime cas a poslede dal
             setTimeSpent(elapsed);
             onTimeSpentChange(elapsed);
-            // Vyprázdníme input, ale čas zůstane
+            // prazdny input ale cas zustane
             setPassword('');
-            // Zastavíme měření (další focus ho znovu spustí)
+            // stop mereni ale dalsi focus ho zapne zase
             startTimeRef.current = null;
         }
     };
