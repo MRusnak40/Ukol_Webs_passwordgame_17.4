@@ -2,7 +2,7 @@ import './App.css'
 import PasswordInputComponent from "./Components/PasswordInputComponent.tsx";
 import PasswordStrength from "./Components/PasswordStrength.tsx";
 import PasswordTimeValidator from "./Components/PasswordTimeValidator.tsx";
-import CharacterSequenceValidator from "./Components/CharacterSequenceValidator.tsx"; // 🟢 import
+import CharacterSequenceValidator from "./Components/CharacterSequenceValidator.tsx";
 import { useState } from "react";
 
 function App() {
@@ -10,6 +10,9 @@ function App() {
     const [timeSpent, setTimeSpent] = useState(0);
 
     return (
+        <>
+
+
         <div className="app-container">
             <h2 className="app-title">Welcome to the App!</h2>
             <h3 className="app-title">Find how strong is your password</h3>
@@ -19,6 +22,10 @@ function App() {
                 setPassword={setPassword}
                 onTimeSpentChange={setTimeSpent}
             />
+
+
+
+
 
             <PasswordStrength password={password} />
 
@@ -35,6 +42,11 @@ function App() {
             )}
 
 
+
+
+
+
+            {/* vraci objetky a s divem pracuju s hodotami objektu */}
             <CharacterSequenceValidator password={password}>
                 {({ isValid, count }) => (
                     <div style={{ marginTop: '1rem' }}>
@@ -47,6 +59,11 @@ function App() {
                 )}
             </CharacterSequenceValidator>
         </div>
+
+
+
+
+        </>
     );
 }
 

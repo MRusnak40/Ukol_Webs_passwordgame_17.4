@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import "./PasswordInput.css";
+import "./CssForComponents/PasswordInput.css";
 
 interface PasswordInputProps {
     password: string;

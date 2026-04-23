@@ -1,4 +1,4 @@
-import "./PasswordStrength.css";
+import "./CssForComponents/PasswordStrength.css";
 
 interface PasswordStrengthProps {
     password: string;
