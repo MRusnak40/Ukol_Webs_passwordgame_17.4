@@ -2,9 +2,10 @@ import "./CssForComponents/PasswordStrength.css";
 
 interface PasswordStrengthProps {
     password: string;
+    strengthLabel?: string;
 }
 
-function PasswordStrength({ password }: PasswordStrengthProps) {
+function PasswordStrength({ password, strengthLabel }: PasswordStrengthProps) {
 
     const checks = {
         typeIn: password.length !==0,
@@ -24,14 +25,14 @@ function PasswordStrength({ password }: PasswordStrengthProps) {
         if (score === 2) return { label: "weak asf", color: "#870c00", width: "20%" };
         if (score === 3) return { label: "mid", color: "#ff6b23", width: "40%" };
         if (score === 4) return { label: "valid", color: "#c8f10f", width: "70%" };
-         return { label: "My boyy best", color: "#2ecc71", width: "100%" };
+        return { label: "My boyy best", color: "#2ecc71", width: "100%" };
     };
 
     const strength = getStrengthData();
 
     return (
         <div className="strength-meter">
-            <div>Síla hesla: <strong>{strength.label}</strong></div>
+            <div>Síla hesla: <strong>{strengthLabel ?? strength.label}</strong></div>
 
             <div className="progress-bar-container">
                 <div

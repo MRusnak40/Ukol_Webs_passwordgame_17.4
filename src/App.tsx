@@ -6,9 +6,25 @@ import PasswordTimeValidator from "./Components/PasswordTimeValidator.tsx";
 import CharacterSequenceValidator from "./Components/CharacterSequenceValidator.tsx";
 import { useEffect, useState } from "react";
 
+function evaluatePassword(password: string): string {
+    const checks = {
+        typeIn: password.length !== 0,
+        length: password.length >= 8,
+        hasUpper: /[A-Z]/.test(password),
+        hasNumber: /[0-9]/.test(password),
+        hasSpecial: /[!@#$%^&*]/.test(password),
+    };
+    const score = Object.values(checks).filter(Boolean).length;
+
+    if (score <= 1) return "Slabé";
+    if (score <= 3) return "Střední";
+    return "Silné";
+}
+
 function App() {
     const [password, setPassword] = useState("");
     const [timeSpent, setTimeSpent] = useState(0);
+    const [passwordStrength, setPasswordStrength] = useState("");
     const [theme, setTheme] = useState<"light" | "dark">(() => {
         const saved = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
         if (saved === "light" || saved === "dark") return saved;
@@ -22,6 +38,12 @@ function App() {
         document.documentElement.setAttribute("data-theme", theme);
         localStorage.setItem("theme", theme);
     }, [theme]);
+
+    useEffect(() => {
+        const strength = evaluatePassword(password);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setPasswordStrength(prev => prev !== strength ? strength : prev);
+    }, [password]);
 
     const toggleTheme = () => {
         setTheme(prev => prev === "light" ? "dark" : "light");
@@ -50,7 +72,7 @@ function App() {
                     onTimeSpentChange={setTimeSpent}
                 />
 
-                <PasswordStrength password={password} />
+                <PasswordStrength password={password} strengthLabel={passwordStrength} />
 
                 {timeSpent > 0 && (
                     <PasswordTimeValidator password={password} time={timeSpent}>
